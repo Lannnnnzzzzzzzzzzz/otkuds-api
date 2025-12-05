@@ -1,18 +1,16 @@
 # Otakudesu API
 
-REST API untuk scraping data anime dari [Otakudesu](https://otakudesu.best). Dibangun dengan NestJS.
-
-[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates?repo=sachnun/otakudesu-api)
+REST API untuk scraping data anime dari [Otakudesu](https://otakudesu.best). Dibangun dengan Next.js.
 
 ## Live Demo
 
 API sudah deploy dan siap digunakan di:
-- **Base URL:** `https://otkuds-api.vercel.app/`
-- **Documentation:** `https://otkuds-api.vercel.app/docs`
+- **Website & Docs:** `https://otkuds-api.vercel.app/`
+- **Base API URL:** `https://otkuds-api.vercel.app/api/`
 
 ## Features
 
-- Homepage (ongoing & completed anime)
+- Homepage data (ongoing & completed anime)
 - Ongoing anime list dengan pagination
 - Completed anime list dengan pagination
 - Anime list A-Z
@@ -22,13 +20,14 @@ API sudah deploy dan siap digunakan di:
 - Weekly release schedule
 - Search anime
 - Resolve streaming URL
+- Beautiful documentation homepage
 
 ## Tech Stack
 
-- **Framework:** NestJS
+- **Framework:** Next.js 15 (App Router)
 - **Scraping:** Axios + Cheerio
-- **Documentation:** Swagger/OpenAPI
-- **Caching:** In-memory cache (5-10 min TTL)
+- **Styling:** Tailwind CSS
+- **Deployment:** Vercel
 
 ## Installation
 
@@ -40,22 +39,44 @@ npm install
 
 ```bash
 # development
-npm run start
+npm run dev
 
-# watch mode
-npm run start:dev
+# production build
+npm run build
 
 # production mode
-npm run start:prod
+npm start
 ```
 
 Server akan berjalan di `http://localhost:3000`
 
-## API Documentation
+## API Endpoints
 
-Swagger UI tersedia di:
-- **Production:** `https://otkuds-api.vercel.app/docs`
-- **Local:** `http://localhost:3000/docs`
+### Home
+- `GET /api/home` - Get homepage data (ongoing & completed anime)
+
+### Anime
+- `GET /api/ongoing?page=1` - Get ongoing anime list
+- `GET /api/complete?page=1` - Get completed anime list
+- `GET /api/anime-list` - Get all anime list (A-Z)
+- `GET /api/anime/:slug` - Get anime detail
+
+### Episode
+- `GET /api/episode/:slug` - Get episode detail with streaming & download links
+
+### Genre
+- `GET /api/genres` - Get all genres
+- `GET /api/genres/:genre?page=1` - Get anime by genre
+
+### Schedule
+- `GET /api/schedule` - Get weekly release schedule
+
+### Search
+- `GET /api/search?q=query` - Search anime
+
+### Streaming
+- `POST /api/resolve-streaming` - Resolve streaming URL (Body: `{"dataContent": "base64"}`)
+- `GET /api/resolve-streaming/:dataContent` - Resolve streaming URL (GET method)
 
 ## Contoh Penggunaan
 
@@ -94,42 +115,40 @@ Semua response menggunakan format konsisten:
   "statusCode": 200,
   "message": "OK",
   "data": { ... },
-  "timestamp": "2024-11-12T10:00:00.000Z",
-  "path": "/api/home",
-  "responseTime": "123ms"
+  "timestamp": "2024-12-05T10:00:00.000Z"
 }
-```
-
-## Testing
-
-```bash
-# unit tests
-npm run test
-
-# test coverage
-npm run test:cov
-
-# e2e tests
-npm run test:e2e
 ```
 
 ## Project Structure
 
 ```
-src/
-├── common/
-│   ├── filters/          # Exception filters
-│   ├── interceptors/     # Response interceptors
-│   └── interfaces/       # Common interfaces
-├── otakudesu/
-│   ├── dto/              # Data transfer objects
-│   ├── interfaces/       # Otakudesu interfaces
-│   ├── otakudesu.controller.ts
-│   ├── otakudesu.service.ts
-│   └── otakudesu.module.ts
-├── app.module.ts
-└── main.ts
+app/
+├── api/                  # API Routes
+│   ├── home/
+│   ├── ongoing/
+│   ├── complete/
+│   ├── anime-list/
+│   ├── anime/[slug]/
+│   ├── episode/[slug]/
+│   ├── genres/
+│   ├── schedule/
+│   ├── search/
+│   └── resolve-streaming/
+├── page.tsx             # Documentation homepage
+├── layout.tsx
+└── globals.css
+lib/
+└── otakudesu.ts        # Scraping utilities
 ```
+
+## Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+1. Push code ke GitHub
+2. Import project di Vercel
+3. Deploy otomatis akan berjalan
+4. API siap digunakan!
 
 ## Disclaimer
 
