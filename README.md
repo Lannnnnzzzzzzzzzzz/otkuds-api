@@ -4,6 +4,12 @@ REST API untuk scraping data anime dari [Otakudesu](https://otakudesu.best). Dib
 
 [![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates?repo=sachnun/otakudesu-api)
 
+## Live Demo
+
+API sudah deploy dan siap digunakan di:
+- **Base URL:** `https://otkuds-api.vercel.app/`
+- **Documentation:** `https://otkuds-api.vercel.app/docs`
+
 ## Features
 
 - Homepage (ongoing & completed anime)
@@ -47,7 +53,36 @@ Server akan berjalan di `http://localhost:3000`
 
 ## API Documentation
 
-Swagger UI tersedia di `http://localhost:3000/docs`
+Swagger UI tersedia di:
+- **Production:** `https://otkuds-api.vercel.app/docs`
+- **Local:** `http://localhost:3000/docs`
+
+## Contoh Penggunaan
+
+### Get Homepage
+```bash
+curl https://otkuds-api.vercel.app/api/home
+```
+
+### Get Ongoing Anime
+```bash
+curl https://otkuds-api.vercel.app/api/ongoing?page=1
+```
+
+### Search Anime
+```bash
+curl "https://otkuds-api.vercel.app/api/search?q=one+punch"
+```
+
+### Get Anime Detail
+```bash
+curl https://otkuds-api.vercel.app/api/anime/one-punch-man-s3-sub-indo
+```
+
+### Get Episode Detail
+```bash
+curl https://otkuds-api.vercel.app/api/episode/onpm-s3-episode-8-sub-indo
+```
 
 ## Response Format
 
